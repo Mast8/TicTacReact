@@ -67,3 +67,16 @@ h1 {
 .square {
   color: white;
 }
+
+@media screen and (max-width: 500px) {
+  .row {
+    display: flex;
+    width: 80%;
+    height: 80%;
+  }
+  .btn-reset {
+    font-size: 20px;
+    width: 50%;
+  }
+
+}

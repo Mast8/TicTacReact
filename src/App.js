@@ -19,6 +19,7 @@ export default function TicTacToe() {
   const [squares, setSquares] = useState(Array(9).fill(""));
   const [isXTurn, setIsXTurn] = useState(true);
   const [status, setStatus] = useState("");
+  const [scores,setScores] = useState({xScore:0, oScore:0});
 
   function getWinner(squares) {
     const winningPatterns = [
@@ -40,6 +41,7 @@ export default function TicTacToe() {
         squares[x] === squares[y] &&
         squares[x] === squares[z]
       ) {
+        
         return squares[x];
       }
     }
@@ -53,6 +55,7 @@ export default function TicTacToe() {
     cpySquares[getCurrentSquare] = isXTurn ?  "X"  : "O";
     setIsXTurn(!isXTurn);
     setSquares(cpySquares);
+    
   }
 
   function handleRestart() {
@@ -63,20 +66,45 @@ export default function TicTacToe() {
   useEffect(() => {
     if (!getWinner(squares) && squares.every((item) => item !== "")) {
       setStatus(`This is a draw ! Please restart the game`);
+      
     } else if (getWinner(squares)) {
       setStatus(`Winner is ${getWinner(squares)}. Please restart the game`);
+      countGame(getWinner(squares))
+      
     } else {
      setStatus(`Next player is ${isXTurn ?  "X" : "O"}`);
  
     }
   }, [squares, isXTurn]);
 
-  console.log(squares);
+
+  function countGame(winner) {
+    
+      console.log(winner+" winner ")
+    
+      if (winner === "O") {
+        
+        let { oScore } = scores;
+        oScore += 1;
+        setScores({ ...scores, oScore })
+      } else {
+        let { xScore } = scores;
+        xScore += 1;
+        setScores({ ...scores, xScore })
+      }
+    
+  }
+
+
+
+  
 
   return (
     
     <div className="tic-tac-toe-container">
       <h1>{status}</h1>
+      <h2 className="Owins">O won {scores.oScore}</h2>
+      <h2 className="Xwins">x won {scores.xScore}</h2>
       <div className="row">
         <Square value={squares[0]} onClick={() => handleClick(0)} />
         <Square value={squares[1]} onClick={() => handleClick(1)} />
