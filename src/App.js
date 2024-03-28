@@ -50,7 +50,6 @@ export default function TicTacToe() {
   function handleClick(getCurrentSquare) {
     let cpySquares = [...squares];
     if (getWinner(cpySquares) || cpySquares[getCurrentSquare]) return;
-    /* cpySquares[getCurrentSquare] = isXTurn ? <span className="X">X</span> : <span className="O">O</span>; */
     cpySquares[getCurrentSquare] = isXTurn ?  "X"  : "O";
     setIsXTurn(!isXTurn);
     setSquares(cpySquares);
@@ -67,14 +66,17 @@ export default function TicTacToe() {
     } else if (getWinner(squares)) {
       setStatus(`Winner is ${getWinner(squares)}. Please restart the game`);
     } else {
-      setStatus(`Next player is ${isXTurn ?  <span className="X">X</span> : "O"}`);
+     setStatus(`Next player is ${isXTurn ?  "X" : "O"}`);
+ 
     }
   }, [squares, isXTurn]);
 
   console.log(squares);
 
   return (
+    
     <div className="tic-tac-toe-container">
+      <h1>{status}</h1>
       <div className="row">
         <Square value={squares[0]} onClick={() => handleClick(0)} />
         <Square value={squares[1]} onClick={() => handleClick(1)} />
@@ -90,8 +92,8 @@ export default function TicTacToe() {
         <Square value={squares[7]} onClick={() => handleClick(7)} />
         <Square value={squares[8]} onClick={() => handleClick(8)} />
       </div>
-      <h1>{status}</h1>
-      <button onClick={handleRestart}>Restart</button>
+      
+      <button className="btn-reset" onClick={handleRestart}>Restart</button>
     </div>
   );
 }
