@@ -69,8 +69,7 @@ export default function TicTacToe() {
       
     } else if (getWinner(squares)) {
       setStatus(`Winner is ${getWinner(squares)}. Please restart the game`);
-      countGame(getWinner(squares))
-      
+      countGame(getWinner(squares)) 
     } else {
      setStatus(`Next player is ${isXTurn ?  "X" : "O"}`);
  
@@ -81,9 +80,7 @@ export default function TicTacToe() {
   function countGame(winner) {
     
       console.log(winner+" winner ")
-    
-      if (winner === "O") {
-        
+      if (winner === "O") {   
         let { oScore } = scores;
         oScore += 1;
         setScores({ ...scores, oScore })
@@ -103,8 +100,12 @@ export default function TicTacToe() {
     
     <div className="tic-tac-toe-container">
       <h1>{status}</h1>
-      <h2 className="Owins">O won {scores.oScore}</h2>
-      <h2 className="Xwins">x won {scores.xScore}</h2>
+      <div className="score">
+        <h2 className="Owins">O won {scores.oScore}</h2>
+        <h2 className="Xwins">X won {scores.xScore}</h2>
+      </div>
+     
+      
       <div className="row">
         <Square value={squares[0]} onClick={() => handleClick(0)} />
         <Square value={squares[1]} onClick={() => handleClick(1)} />
