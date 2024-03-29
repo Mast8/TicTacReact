@@ -1,6 +1,6 @@
 
 
-    // 0 1 2
+// 0 1 2
 // 3 4 5
 // 6 7 8
 
@@ -35,17 +35,14 @@ export default function TicTacToe() {
 
     for (let i = 0; i < winningPatterns.length; i++) {
       const [x, y, z] = winningPatterns[i];
-
       if (
         squares[x] &&
         squares[x] === squares[y] &&
         squares[x] === squares[z]
       ) {
-        
         return squares[x];
       }
     }
-
     return null;
   }
 
@@ -55,7 +52,6 @@ export default function TicTacToe() {
     cpySquares[getCurrentSquare] = isXTurn ?  "X"  : "O";
     setIsXTurn(!isXTurn);
     setSquares(cpySquares);
-    
   }
 
   function handleRestart() {
@@ -63,38 +59,35 @@ export default function TicTacToe() {
     setSquares(Array(9).fill(""));
   }
 
+  function handleReset() {
+    handleRestart();
+    setScores({xScore:0, oScore:0});
+  }
+
+  function countGame(winner) {
+    console.log(winner+" winner ")
+    if (winner === "O") {   
+      let { oScore } = scores;
+      oScore += 1;
+      setScores({ ...scores, oScore })
+    } else {
+      let { xScore } = scores;
+      xScore += 1;
+      setScores({ ...scores, xScore })
+    }
+  }
+
   useEffect(() => {
     if (!getWinner(squares) && squares.every((item) => item !== "")) {
       setStatus(`This is a draw ! Please restart the game`);
-      
     } else if (getWinner(squares)) {
       setStatus(`Winner is ${getWinner(squares)}. Please restart the game`);
-      countGame(getWinner(squares)) 
+      countGame(getWinner(squares));
     } else {
      setStatus(`Next player is ${isXTurn ?  "X" : "O"}`);
  
     }
   }, [squares, isXTurn]);
-
-
-  function countGame(winner) {
-    
-      console.log(winner+" winner ")
-      if (winner === "O") {   
-        let { oScore } = scores;
-        oScore += 1;
-        setScores({ ...scores, oScore })
-      } else {
-        let { xScore } = scores;
-        xScore += 1;
-        setScores({ ...scores, xScore })
-      }
-    
-  }
-
-
-
-  
 
   return (
     
@@ -105,7 +98,6 @@ export default function TicTacToe() {
         <h2 className="Xwins">X won {scores.xScore}</h2>
       </div>
      
-      
       <div className="row">
         <Square value={squares[0]} onClick={() => handleClick(0)} />
         <Square value={squares[1]} onClick={() => handleClick(1)} />
@@ -123,6 +115,7 @@ export default function TicTacToe() {
       </div>
       
       <button className="btn-reset" onClick={handleRestart}>Restart</button>
+      <button className="btn-reset" onClick={handleReset}>Reset scores</button>
     </div>
   );
 }
