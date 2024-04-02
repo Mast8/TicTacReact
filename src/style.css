@@ -37,7 +37,7 @@ h1 {
 }
 
 .X {
-  color: red;
+  color: rgb(0, 47, 255);
 }
 
 .square:hover {
@@ -45,7 +45,7 @@ h1 {
 }
 
 .O {
-  color: blue;
+  color: rgb(165, 163, 19);
 }
 
 .btn-reset {
@@ -63,10 +63,6 @@ h1 {
 .btn-reset:hover {
   color: #1f3540;
   background-color: #25ffcb;
-}
-
-.square {
-  color: white;
 }
 
 .score {

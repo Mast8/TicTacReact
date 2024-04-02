@@ -8,8 +8,10 @@ import { useEffect, useState } from "react";
 import "./style.css";
 
 function Square({ value, onClick }) {
+
+  const style = value === "X" ? "square X" : "square O";
   return (
-    <button onClick={onClick} className="square">
+    <button onClick={onClick} className={style} >
       {value}
     </button>
   );
@@ -20,6 +22,7 @@ export default function TicTacToe() {
   const [isXTurn, setIsXTurn] = useState(true);
   const [status, setStatus] = useState("");
   const [scores,setScores] = useState({xScore:0, oScore:0});
+
 
   function getWinner(squares) {
     const winningPatterns = [
@@ -49,10 +52,17 @@ export default function TicTacToe() {
   function handleClick(getCurrentSquare) {
     let cpySquares = [...squares];
     if (getWinner(cpySquares) || cpySquares[getCurrentSquare]) return;
-    cpySquares[getCurrentSquare] = isXTurn ?  "X"  : "O";
+    
+    cpySquares[getCurrentSquare] = isXTurn ? "X"   : "O";
     setIsXTurn(!isXTurn);
     setSquares(cpySquares);
+   /*  hoverMark(); */
   }
+
+ /*  function hoverMark(){
+    cpySquares[getCurrentSquare] = isXTurn ? "X"   : "O";
+    isXTurn ?  setBoard()  : "O";
+  } */
 
   function handleRestart() {
     setIsXTurn(true);
@@ -84,8 +94,7 @@ export default function TicTacToe() {
       setStatus(`Winner is ${getWinner(squares)}. Please restart the game`);
       countGame(getWinner(squares));
     } else {
-     setStatus(`Next player is ${isXTurn ?  "X" : "O"}`);
- 
+      setStatus(`Next player is ${isXTurn ?  "X" : "O"}`);
     }
   }, [squares, isXTurn]);
 
@@ -97,6 +106,7 @@ export default function TicTacToe() {
         <h2 className="Owins">O won {scores.oScore}</h2>
         <h2 className="Xwins">X won {scores.xScore}</h2>
       </div>
+     <div className="board" >
      
       <div className="row">
         <Square value={squares[0]} onClick={() => handleClick(0)} />
@@ -113,6 +123,7 @@ export default function TicTacToe() {
         <Square value={squares[7]} onClick={() => handleClick(7)} />
         <Square value={squares[8]} onClick={() => handleClick(8)} />
       </div>
+     </div>
       
       <button className="btn-reset" onClick={handleRestart}>Restart</button>
       <button className="btn-reset" onClick={handleReset}>Reset scores</button>
