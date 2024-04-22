@@ -21,8 +21,9 @@ export default function TicTacToe() {
   const [squares, setSquares] = useState(Array(9).fill(""));
   const [isXTurn, setIsXTurn] = useState(true);
   const [status, setStatus] = useState("");
-  const [scores,setScores] = useState({xScore:0, oScore:0});
-
+  const [xScore, setXScore] =useState(0 );
+  const [oScore, setOScore] =useState(0 );
+  const [drawScore, setDrawScore] =useState(0 );
 
   function getWinner(squares) {
     const winningPatterns = [
@@ -67,28 +68,34 @@ export default function TicTacToe() {
   function handleRestart() {
     setIsXTurn(true);
     setSquares(Array(9).fill(""));
+
   }
 
   function handleReset() {
     handleRestart();
-    setScores({xScore:0, oScore:0});
+    setDrawScore(0);
+    setXScore(0);
+    setOScore(0);
   }
 
   function countGame(winner) {
+
     console.log(winner+" winner ")
     if (winner === "O") {   
-      let { oScore } = scores;
-      oScore += 1;
-      setScores({ ...scores, oScore })
-    } else {
-      let { xScore } = scores;
-      xScore += 1;
-      setScores({ ...scores, xScore })
-    }
+      setOScore( oScore+1 );
+      console.log(oScore+" y ")
+     
+    } else
+      if(winner === "X")  {
+        setXScore( xScore+1 );
+        console.log(xScore+" x ")
+        
+    } 
   }
 
   useEffect(() => {
     if (!getWinner(squares) && squares.every((item) => item !== "")) {
+      setDrawScore( drawScore+1 )
       setStatus(`This is a draw ! Please restart the game`);
     } else if (getWinner(squares)) {
       setStatus(`Winner is ${getWinner(squares)}. Please restart the game`);
@@ -103,8 +110,10 @@ export default function TicTacToe() {
     <div className="tic-tac-toe-container">
       <h1>{status}</h1>
       <div className="score">
-        <h2 className="Owins">O won {scores.oScore}</h2>
-        <h2 className="Xwins">X won {scores.xScore}</h2>
+        <h2 className="Owins">O won {oScore}</h2>
+        <h2 className="Draw">Draw {drawScore}</h2>
+        <h2 className="Xwins">X won {xScore}</h2>
+        
       </div>
      <div className="board" >
      
