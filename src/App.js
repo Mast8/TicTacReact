@@ -94,20 +94,19 @@ export default function TicTacToe() {
   
 
   useEffect(() => {
+    //draw case
     if (!getWinner(squares) && squares.every((item) => item !== "")) {
       setDrawScore( drawScore +1 );
       setTurnIcon("");
       setStatus(`This is a draw ! Please restart the game`);
+      //winner case
     } else if (getWinner(squares)) {
-      //setStatus(`Winner is ${getWinner(squares)}. Please restart the game`);
       setStatus(`Please restart the game. Winner is`);
-      //setTurnIcon("");
       setTurnIcon(`${isXTurn ?  "O" : "X"}`);
       countGame(getWinner(squares));
     } else {
       setStatus(`Next player is `);
       setTurnIcon(`${isXTurn ?  "X" : "O"}`);
-
     }
     
   }, [squares, isXTurn]);
@@ -118,9 +117,9 @@ export default function TicTacToe() {
     <div className="tic-tac-toe-container">
       <h1>{status} <span className={turnIcon}>{turnIcon} </span></h1>
       <div className="score">
-        <h2 className="Owins">O won {oScore}</h2>
+        <h2 className="Xwins"><span className="X">X</span> won {xScore}</h2>
         <h2 className="Draw">Draw {drawScore}</h2>
-        <h2 className="Xwins">X won {xScore}</h2>
+        <h2 className="Owins"><span className="O">O</span> won {oScore}</h2>
       </div>
 
      <div className="board" >
