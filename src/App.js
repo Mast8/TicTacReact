@@ -96,15 +96,18 @@ export default function TicTacToe() {
   useEffect(() => {
     if (!getWinner(squares) && squares.every((item) => item !== "")) {
       setDrawScore( drawScore +1 );
+      setTurnIcon("");
       setStatus(`This is a draw ! Please restart the game`);
     } else if (getWinner(squares)) {
-      setStatus(`Winner is ${getWinner(squares)}. Please restart the game`);
-      setTurnIcon("");
+      //setStatus(`Winner is ${getWinner(squares)}. Please restart the game`);
+      setStatus(`Please restart the game. Winner is`);
+      //setTurnIcon("");
+      setTurnIcon(`${isXTurn ?  "O" : "X"}`);
       countGame(getWinner(squares));
     } else {
       setStatus(`Next player is `);
       setTurnIcon(`${isXTurn ?  "X" : "O"}`);
-      //console.log(turnIcon)
+
     }
     
   }, [squares, isXTurn]);
@@ -118,10 +121,9 @@ export default function TicTacToe() {
         <h2 className="Owins">O won {oScore}</h2>
         <h2 className="Draw">Draw {drawScore}</h2>
         <h2 className="Xwins">X won {xScore}</h2>
-        
       </div>
+
      <div className="board" >
-     
       <div className="row">
         <Square value={squares[0]} onClick={() => handleClick(0)} />
         <Square value={squares[1]} onClick={() => handleClick(1)} />
